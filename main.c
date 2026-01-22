@@ -23,12 +23,12 @@
 static void *find_pattern(const uint8_t *pattern, int size, uint64_t begin, uint64_t end){
 	for(; begin + size < end; begin++){
 		DWORD old_prot = 0;
-		VirtualProtect((void *)begin, size, PAGE_EXECUTE_READWRITE, &old_prot);
+		//VirtualProtect((void *)begin, size, PAGE_EXECUTE_READWRITE, &old_prot);
 		if (memcmp((void *)begin, pattern, size) == 0){
-			VirtualProtect((void *)begin, size, old_prot, &old_prot);
+			//VirtualProtect((void *)begin, size, old_prot, &old_prot);
 			return (void *)begin;
 		}
-		VirtualProtect((void *)begin, size, old_prot, &old_prot);
+		//VirtualProtect((void *)begin, size, old_prot, &old_prot);
 	}
 	return NULL;
 }
@@ -56,7 +56,7 @@ static void disable_aim_sway(HANDLE process, HMODULE module){
 		return;
 	}
 	patch_memory(patch_location, patch, sizeof(patch));
-	LOG("%s: patch applied\n", __func__);
+	LOG("%s: patch applied at %p\n", __func__, patch_location);
 }
 
 static void find_and_patch_fc_m64(){
